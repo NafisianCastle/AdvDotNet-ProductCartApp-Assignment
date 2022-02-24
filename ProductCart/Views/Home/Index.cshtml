@@ -40,21 +40,24 @@
     </style>
 </head>
 <body>
-    <div></div>
-    <div class="row">
-        @foreach (var item in Model)
-        {
-            <div class="col-md-3">
-                <div class="card">
-                    <img src="https://thumbs.dreamstime.com/z/demo-red-rubber-stamp-over-white-background-88003515.jpg" alt="..." style="width: 100%">
-                    <h1>@item.Name</h1>
-                    <p class="price">$@item.Price</p>
-                    <p>Some text about product..</p>
-                    <p><button><a class="btn" href="Home/AddToCart">Add to Cart</a></button></p>
-                </div>
-            </div>
-        }
+    <div>
+        @Html.ActionLink("Checkout", "Checkout")
     </div>
+<div class="row">
+   
+    @foreach (var item in Model)
+    {
+        <div class="col-md-3">
+            <div class="card">
+                <img src="https://thumbs.dreamstime.com/z/demo-red-rubber-stamp-over-white-background-88003515.jpg" alt="..." style="width: 100%">
+                <h1>@item.Name</h1>
+                <p class="price">$@item.Price</p>
+                <p>Some text about product..</p>
+                <p><button>@Html.ActionLink("Add to cart", "AddToCart", new { id = item.Id })</button></p>
+            </div>
+        </div>
+    }
+</div>
 </body>
 </html>
 

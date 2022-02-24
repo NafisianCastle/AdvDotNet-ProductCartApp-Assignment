@@ -1,5 +1,7 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using System.Web.Mvc;
+using System.Web.Script.Serialization;
 using ProductCart.Models.Database;
 
 namespace ProductCart.Controllers
@@ -13,22 +15,35 @@ namespace ProductCart.Controllers
             return View(data);
         }
 
-        public ActionResult AddToCart()
+        
+        public ActionResult AddToCart(int id)
         {
-            if (Session["cart"]== null)
+            var db = new product_taskEntities();
+            var product = db.Products.FirstOrDefault(x => x.Id == id);
+            if (Session["cart"] == null)
             {
-                
+                var productList = new List<Product> {product};
+                var json = new JavaScriptSerializer().Serialize(productList);
+                Session["cart"] = json;
             }
             else
             {
-
+                var existingProds = Session["cart"].ToString();
+                var products = new JavaScriptSerializer().Deserialize<List<Product>>(existingProds);
+                products.Add(product);
+                var json = new JavaScriptSerializer().Serialize(products);
+                Session["cart"] = json;
             }
             return RedirectToAction("Index");
         }
-
+       
         public ActionResult Checkout()
         {
-            return View();
+            if (Session["cart"] == null) return View();
+            var cartProducts = Session["cart"].ToString();
+            var productList = new JavaScriptSerializer().Deserialize<List<Product>>(cartProducts);
+            return View(productList);
+
         }
 
         public ActionResult About()
