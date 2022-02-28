@@ -1,4 +1,4 @@
-ProductCartApp - A minimal ecommerce webpage task
+ProductCartApp - A minimal ecommerce website
 
 <img src="/Screenshot/Screenshot 2022-02-24 133621.png">
 <img src="Screenshot/Screenshot 2022-02-24 133924.png">
